@@ -54,39 +54,35 @@
   appCache = window.applicationCache;
 
   onCacheUpdate = function() {
-    var status;
+    var bookmark, status;
+    bookmark = true;
     status = (function() {
       switch (appCache.status) {
         case appCache.UNCACHED:
-          return 'uncached';
+          bookmark = false;
+          return 'This eBook is not saved; you will need Internet access to view it again';
         case appCache.IDLE:
-          return 'idle';
-        case appCache.CHECKING:
-          return 'checking';
-        case appCache.DOWNLOADING:
-          return 'downloading';
         case appCache.UPDATEREADY:
-          return 'updateready';
+          return 'Saved for off-Internet use';
+        case appCache.CHECKING:
+        case appCache.DOWNLOADING:
+          return 'Checking for a new version';
         case appCache.OBSOLETE:
           return 'obsolete';
         default:
-          return 'unknown (' + appCache.status + ')';
+          return 'There unknown (' + appCache.status + ')';
       }
     })();
     console.log('AppCache status = ' + status);
-    $('#cacheFeedback').html('Cache ' + status);
-    if (appCache.status === appCache.UPDATEREADY) {
-      return $(":mobile-pagecontainer").pagecontainer("change", "#updateready", {
-        changeHash: true,
-        reload: true
-      });
+    if (bookmark) {
+      status = status + "<br/>Bookmark this page to view it later";
     }
+    return $('#cacheFeedback').html(status);
   };
 
   module.exports.init = function() {
     if (appCache == null) {
       console.log('no appCache');
-      $('#cacheFeedback').html('Sorry, cannot cache on this device');
       return false;
     }
     onCacheUpdate();

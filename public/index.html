@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>eBook Template</title>
 	<link rel="stylesheet" href="css/jquery.mobile-1.4.2.min.css">
-	<!--<link rel="shortcut icon" href="../favicon.ico">-->
+	<link rel="shortcut icon" href="assets/favicon.ico">
 	<script src="js/jquery-1.11.0.min.js"></script>
 	<script src="js/jquery.mobile-1.4.2.min.js"></script>
 	<script src="application.js"></script>
@@ -14,39 +14,70 @@
 
 <body>
 
-<div data-role="page" id="p1">
+<div data-role="page" id="title">
 
 	<div data-role="header">
-		<h1>eBook Template</h1>
+		<h1>eBook Title</h1>
 		<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-icon-back ui-btn-icon-left ui-btn-icon-notext">Back</a>
 		<div data-role="navbar">
 			<ul>
-				<li><a href="#p1" class="ui-btn-active ui-state-persist">Page 1</a></li>
-				<li><a href="#p2">Page 2</a></li>
+				<li><a href="#" class="ui-state-disabled" data-icon="arrow-l">Prev</a></li>
+				<li><a href="#contents" class="" data-icon="bars">Contents</a></li>
+				<li><a href="#p1" class="" data-icon="arrow-r">Next</a></li>
 			</ul>
 		</div>
 	</div><!-- /header -->
 
 	<div role="main" class="ui-content">
-		<p>This is a two-page test.</p>
 		<p>Page one Page one Page one Page one Page one Page one Page one Page one Page one Page one Page one Page one Page one Page one.</p>
+		<p>By Blah Blah, date...</p>
 	</div><!-- /content -->
 
 	<div data-role="footer">
-		<h4 id="cacheFeedback">Footer content</h4>
+		<h4 id="cacheFeedback">This eBook is not saved; you will need Internet access to view it again</h4>
 	</div><!-- /footer -->
 
 </div><!-- /page -->
 
-<div data-role="page" id="p2">
+
+<div data-role="page" id="contents">
 
 	<div data-role="header">
-		<h1>Page 2</h1>
+		<h1>eBook Title</h1>
 		<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-icon-back ui-btn-icon-left ui-btn-icon-notext">Back</a>
 		<div data-role="navbar">
 			<ul>
-				<li><a href="#p1">Page 1</a></li>
-				<li><a href="#p2" class="ui-btn-active ui-state-persist">Page 2</a></li>
+				<li><a href="#title" class="">&lt;</a></li>
+				<li><a href="#contents" class="ui-btn-active ui-state-persist">Contents</a></li>
+				<li><a href="#p1">&gt;</a></li>
+			</ul>
+		</div>
+	</div><!-- /header -->
+
+	<div role="main" class="ui-content">
+		<ul data-role="listview">
+    			<li><a href="#p1">Page 1</a></li>
+    			<li><a href="#p2">Page 2</a></li>
+ 		</ul>
+		<p>Page one Page one Page one Page one Page one Page one Page one Page one Page one Page one Page one Page one Page one Page one.</p>
+	</div><!-- /content -->
+
+	<!--<div data-role="footer">
+		<h4>Footer content</h4>
+	</div>--><!-- /footer -->
+
+</div><!-- /page -->
+
+<div data-role="page" id="p1">
+
+	<div data-role="header">
+		<h1>Page 1</h1>
+		<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-icon-back ui-btn-icon-left ui-btn-icon-notext">Back</a>
+		<div data-role="navbar">
+			<ul>
+				<li><a href="#contents" class="">&lt;</a></li>
+				<li><a href="#contents" class="">Contents</a></li>
+				<li><a href="#" class="ui-state-disabled">&gt;</a></li>
 			</ul>
 		</div>
 	</div><!-- /header -->
@@ -56,13 +87,13 @@
    		<p>Page two Page two Page two Page two Page two Page two Page two Page two Page two Page two Page two Page two Page two Page two Page two Page two Page two Page two Page two.</p>
 	</div><!-- /content -->
 
-	<div data-role="footer">
+	<!--<div data-role="footer">
 		<h4>Footer content</h4>
-	</div><!-- /footer -->
+	</div>--><!-- /footer -->
 
 </div><!-- /page -->
 
-<div data-role="page" data-dialog="true" id="updateready">
+<!--<div data-role="page" data-dialog="true" id="updateready">
 
 		<div data-role="header" >
 		<h1>Update ready</h1>
@@ -71,10 +102,9 @@
 		<div role="main" class="ui-content">
 		<h1>Update page</h1>
 		<p>There is a new version of this eBook available.</p>
-			<!--<a href="#reload" id="reload" class="ui-btn ui-shadow ui-corner-all ui-btn-a">OK</a>-->
 			<a href="#" id="reload" data-rel="back" class="ui-btn ui-shadow ui-corner-all ui-btn-a">OK</a>
 		</div>
-	</div>
+	</div>-->
 
   <script type="text/javascript" charset="utf-8">
       console.log("Running app...");

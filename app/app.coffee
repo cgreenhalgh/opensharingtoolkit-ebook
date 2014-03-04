@@ -4,24 +4,28 @@
 appCache = window.applicationCache
 
 onCacheUpdate = () ->
+  bookmark = true
   status = switch appCache.status
-    when appCache.UNCACHED then 'uncached'
-    when appCache.IDLE then 'idle'
-    when appCache.CHECKING then 'checking'
-    when appCache.DOWNLOADING then 'downloading'
-    when appCache.UPDATEREADY then 'updateready'
-    when appCache.OBSOLETE then 'obsolete'
-    else 'unknown ('+appCache.status+')'
+    when appCache.UNCACHED  
+      bookmark = false
+      'This eBook is not saved; you will need Internet access to view it again'
+    when appCache.IDLE, appCache.UPDATEREADY 
+      'Saved for off-Internet use'
+    when appCache.CHECKING, appCache.DOWNLOADING 
+      'Checking for a new version'
+    when appCache.OBSOLETE 
+      'obsolete'
+    else 
+      'There unknown ('+appCache.status+')'
   console.log 'AppCache status = '+status
-  $('#cacheFeedback').html 'Cache '+status
-  if appCache.status == appCache.UPDATEREADY
-    $(":mobile-pagecontainer").pagecontainer "change", "#updateready", {changeHash:true,reload:true}
-
+  if bookmark
+    status = status+"<br/>Bookmark this page to view it later"
+  $('#cacheFeedback').html status
 
 module.exports.init = () ->
   if not appCache?
     console.log 'no appCache'
-    $('#cacheFeedback').html 'Sorry, cannot cache on this device'
+    #$('#cacheFeedback').html 'This eBook is not saved; you will need Internet access to view it again'
     return false
   onCacheUpdate()
   $(appCache).bind "cached checking downloading error noupdate obsolete progress updateready", (ev) ->
