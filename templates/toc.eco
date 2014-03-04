@@ -1,0 +1,20 @@
+
+<div data-role="page" id="contents">
+
+	<div data-role="header">
+		<h1><%= @title %></h1>
+		<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-icon-back ui-btn-icon-left ui-btn-icon-notext">Back</a>
+		<%- @makeNavbar 'about','contents',@toc[0]?.pageid %>
+	</div><!-- /header -->
+
+	<div role="main" class="ui-content">
+		<ul data-role="listview">
+			<% for entry in @toc: %>
+    				<li><a href="#<%= entry.pageid %>"><%= entry.title %></a></li>
+			<% end %>
+ 		</ul>
+	</div><!-- /content -->
+
+</div><!-- /page -->
+
+

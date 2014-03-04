@@ -1,0 +1,13 @@
+/* default image */
+img {
+  width: 50%;
+  height: auto;
+  margin-left: 25%;
+  margin-right:auto;
+  text-align: center;
+}
+.cover-image {
+  width: 100%;
+  margin: 0;
+  padding: 0.5em;
+}

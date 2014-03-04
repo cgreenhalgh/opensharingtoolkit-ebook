@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" manifest="index.appcache">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title><%= @title %></title>
+	<link rel="stylesheet" href="../css/jquery.mobile-1.4.2.min.css">
+	<link rel="stylesheet" href="../css/ebook.css">
+	<link rel="shortcut icon" href="../assets/favicon.ico">
+	<script src="../js/jquery-1.11.0.min.js"></script>
+	<script src="../js/jquery.mobile-1.4.2.min.js"></script>
+	<script src="../application.js"></script>
+</head>
+
+<body>
+
+<% for page in @pages: %>
+  <%- page %>
+<% end %> 
+
+  <script type="text/javascript" charset="utf-8">
+      console.log("Running app...");
+      var App = require("app");
+      // initialise foundation - for accordion etc
+      App.init();
+  </script>
+
+</body>
+</html>

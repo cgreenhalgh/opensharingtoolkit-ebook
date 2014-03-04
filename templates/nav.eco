@@ -1,0 +1,8 @@
+<div data-role="navbar">
+	<ul><!-- page = <%= @pageid %>, prev = <%= @previd %> -->
+		<li><a href="#<%= @previd ?= '' %>" class="<%= if @previd? and @previd isnt '' then '' else 'ui-state-disabled' %>" data-icon="arrow-l">Prev</a></li>
+		<li><a href="#contents" class="<%= if @pageid is 'contents' then 'ui-btn-active ui-state-persist' else '' %>" data-icon="bars">Contents</a></li>
+		<li><a href="#<%= @nextid ?= '' %>" class="<%= if @nextid? and @nextid isnt '' then '' else 'ui-state-disabled' %>" data-icon="arrow-r">Next</a></li>
+	</ul>
+</div>
+
