@@ -49,7 +49,7 @@
   }
   return this.require.define;
 }).call(this)({"app": function(exports, require, module) {(function() {
-  var appCache, onCacheUpdate;
+  var appCache, delayedLink, onCacheUpdate;
 
   appCache = window.applicationCache;
 
@@ -80,16 +80,41 @@
     return $('#cacheFeedback').html(status);
   };
 
+  delayedLink = null;
+
   module.exports.init = function() {
     if (appCache == null) {
       console.log('no appCache');
       return false;
     }
     onCacheUpdate();
-    return $(appCache).bind("cached checking downloading error noupdate obsolete progress updateready", function(ev) {
+    $(appCache).bind("cached checking downloading error noupdate obsolete progress updateready", function(ev) {
       console.log('appCache event ' + ev.type + ', status = ' + appCache.status);
       onCacheUpdate();
       return false;
+    });
+    $('a').on('click', function(ev) {
+      var href;
+      href = $(ev.currentTarget).attr('href');
+      if (href.indexOf(':') >= 0 || href.indexOf('//') === 0) {
+        console.log("Delayed click " + href);
+        delayedLink = href;
+        $('#linkUrl').text(href);
+        location.hash = 'link';
+        return false;
+      } else {
+        return true;
+      }
+    });
+    return $('#linkOpen').on('click', function(ev) {
+      var open;
+      open = function() {
+        if (delayedLink) {
+          return window.open(delayedLink);
+        }
+      };
+      setTimeout(open, 100);
+      return true;
     });
   };
 

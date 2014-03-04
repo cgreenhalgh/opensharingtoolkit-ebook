@@ -22,6 +22,8 @@ onCacheUpdate = () ->
     status = status+"<br/>Bookmark this page to view it later"
   $('#cacheFeedback').html status
 
+delayedLink = null
+
 module.exports.init = () ->
   if not appCache?
     console.log 'no appCache'
@@ -41,3 +43,22 @@ module.exports.init = () ->
   #    console.log 'reload'
   #    window.location.reload()
   #  return true
+  $('a').on 'click',(ev)->
+    href = $(ev.currentTarget).attr 'href'
+    # scheme?
+    if href.indexOf(':') >= 0 or href.indexOf('//') == 0
+      console.log "Delayed click #{href}"
+      delayedLink = href
+      $('#linkUrl').text href
+      location.hash = 'link'
+      false
+    else
+      true
+  $('#linkOpen').on 'click',(ev)->
+    # delayed open
+    open = () -> 
+      if delayedLink
+        window.open delayedLink 
+    setTimeout open,100
+    true
+

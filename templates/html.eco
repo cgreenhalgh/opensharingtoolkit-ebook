@@ -21,6 +21,24 @@
   <%- page %>
 <% end %> 
 
+<div data-role="page" data-dialog="true" id="link">
+
+	<div data-role="header">
+		<h1>Open link</h1>
+		<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-icon-back ui-btn-icon-left ui-btn-icon-notext">Back</a>
+	</div><!-- /header -->
+
+	<div role="main" class="ui-content">
+		<p>You will need internet access to follow this external link:</p>
+		<pre id="linkUrl"></pre>
+		<p>You may have to pay for data transfered if you are using a mobile internet connection (depending on your contract).</p>
+		<a href="#" id="linkOpen" data-rel="back" class="ui-btn ui-shadow ui-corner-all ui-btn-a">OK, carry on</a>
+		<a href="#" data-rel="back" class="ui-btn ui-shadow ui-corner-all ui-btn-a">Not now</a>
+	</div><!-- /content -->
+
+</div><!-- /page -->
+
+
   <script type="text/javascript" charset="utf-8">
       console.log("Running app...");
       var App = require("app");
