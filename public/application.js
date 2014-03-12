@@ -49,7 +49,7 @@
   }
   return this.require.define;
 }).call(this)({"app": function(exports, require, module) {(function() {
-  var appCache, delayedLink, onCacheUpdate;
+  var appCache, delayedLink, onCacheUpdate, pageStack;
 
   appCache = window.applicationCache;
 
@@ -62,8 +62,9 @@
           bookmark = false;
           return 'This eBook is not saved; you will need Internet access to view it again';
         case appCache.IDLE:
-        case appCache.UPDATEREADY:
           return 'Saved for off-Internet use';
+        case appCache.UPDATEREADY:
+          return '<a href="#reload">Reload the new version</a>';
         case appCache.CHECKING:
         case appCache.DOWNLOADING:
           return 'Checking for a new version';
@@ -82,6 +83,15 @@
 
   delayedLink = null;
 
+  pageStack = [];
+
+  $(document).on("mobileinit", function() {
+    console.log('mobileinit');
+    $.mobile.pushStateEnabled = false;
+    $.mobile.ajaxEnabled = false;
+    return $.mobile.linkBindingEnabled = false;
+  });
+
   module.exports.init = function() {
     if (appCache == null) {
       console.log('no appCache');
@@ -93,16 +103,48 @@
       onCacheUpdate();
       return false;
     });
-    $('a').on('click', function(ev) {
-      var href;
+    console.log("mobile config anyway...");
+    $.mobile.pushStateEnabled = false;
+    $.mobile.ajaxEnabled = false;
+    $.mobile.linkBindingEnabled = false;
+    $(document).on('click', 'a', function(ev) {
+      var activeId, activePage, backUrl, err, href;
       href = $(ev.currentTarget).attr('href');
       if (href.indexOf(':') >= 0 || href.indexOf('//') === 0) {
         console.log("Delayed click " + href);
+        activePage = $("body").pagecontainer('getActivePage');
+        activeId = activePage.get(0).id;
+        pageStack.push(activeId);
         delayedLink = href;
         $('#linkUrl').text(href);
-        location.hash = 'link';
+        $("body").pagecontainer('change', '#link', {
+          changeHash: false
+        });
         return false;
+      } else if ($(ev.currentTarget).parents('div[id=link]').length > 0) {
+        console.log("click on link page " + href);
+        if (pageStack.length > 0) {
+          backUrl = '#' + pageStack[pageStack.length - 1];
+        } else {
+          console.log("pageStack empty!");
+          backUrl = '#';
+        }
+        $("body").pagecontainer('change', backUrl, {
+          changeHash: false
+        });
+        return false;
+      } else if (href === '#reload') {
+        console.log('Reload...');
+        event.preventDefault();
+        try {
+          window.applicationCache.swapCache();
+        } catch (_error) {
+          err = _error;
+          console.log("error swapping cache: " + err);
+        }
+        return window.location.reload();
       } else {
+        console.log("click " + href);
         return true;
       }
     });
