@@ -107,8 +107,8 @@
     $.mobile.pushStateEnabled = false;
     $.mobile.ajaxEnabled = false;
     $.mobile.linkBindingEnabled = false;
-    $(document).on('click', 'a', function(ev) {
-      var activeId, activePage, backUrl, err, href;
+    return $(document).on('click', 'a', function(ev) {
+      var activeId, activePage, backUrl, err, href, open;
       href = $(ev.currentTarget).attr('href');
       if (href.indexOf(':') >= 0 || href.indexOf('//') === 0) {
         console.log("Delayed click " + href);
@@ -132,6 +132,14 @@
         $("body").pagecontainer('change', backUrl, {
           changeHash: false
         });
+        if (href === '#linkOpen') {
+          open = function() {
+            if (delayedLink != null) {
+              return window.open(delayedLink, '_self');
+            }
+          };
+          open();
+        }
         return false;
       } else if (href === '#reload') {
         console.log('Reload...');
@@ -147,16 +155,6 @@
         console.log("click " + href);
         return true;
       }
-    });
-    return $('#linkOpen').on('click', function(ev) {
-      var open;
-      open = function() {
-        if (delayedLink) {
-          return window.open(delayedLink);
-        }
-      };
-      setTimeout(open, 100);
-      return true;
     });
   };
 

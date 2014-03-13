@@ -78,6 +78,13 @@ module.exports.init = () ->
         console.log "pageStack empty!"
         backUrl = '#'
       $("body").pagecontainer 'change',backUrl,{changeHash:false}
+      if href=='#linkOpen'
+        # delayed open
+        open = () -> 
+          if delayedLink?
+            window.open delayedLink,'_self' 
+        #setTimeout open,100
+        open()
       false
     else if href=='#reload'
       console.log 'Reload...'
@@ -90,11 +97,4 @@ module.exports.init = () ->
     else
       console.log "click #{href}"
       true
-  $('#linkOpen').on 'click',(ev)->
-    # delayed open
-    open = () -> 
-      if delayedLink
-        window.open delayedLink 
-    setTimeout open,100
-    true
 
