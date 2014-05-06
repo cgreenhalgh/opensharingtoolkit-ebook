@@ -3,18 +3,16 @@
 	<div data-role="header">
 		<h1><%= @title %></h1>
 		<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-icon-back ui-btn-icon-left ui-btn-icon-notext">Back</a>
-                <%- @makeNavbar null,'cover','about' %>
+                <%- @makeNavbar 'landing','cover','about' %>
 	</div><!-- /header -->
 
 	<div role="main" class="ui-content">
 		<% if @coverImages.length > 0: %>
 			<img src="<%= @coverImages[0] %>" class="cover-image"/>
+                <% else: %>
+			<h1><%= @title %></h1>
  		<% end %>
 	</div><!-- /content -->
-
-	<div data-role="footer">
-		<h4 id="cacheFeedback">This eBook is not saved; you will need Internet access to view it again</h4>
-	</div><!-- /footer -->
 
 </div><!-- /page -->
 

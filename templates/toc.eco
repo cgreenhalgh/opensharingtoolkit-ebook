@@ -4,7 +4,7 @@
 	<div data-role="header">
 		<h1><%= @title %></h1>
 		<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-icon-back ui-btn-icon-left ui-btn-icon-notext">Back</a>
-		<%- @makeNavbar 'about','contents',@toc[0]?.pageid %>
+		<%- @makeNavbar 'about','contents',@firstPageid %>
 	</div><!-- /header -->
 
 	<div role="main" class="ui-content">

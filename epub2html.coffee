@@ -9,6 +9,7 @@ xml2js = require 'xml2js'
 console.log 'reading templates...'
 htmlTemplate = fs.readFileSync __dirname + "/templates/html.eco", "utf-8"
 coverTemplate = fs.readFileSync __dirname + "/templates/cover.eco", "utf-8"
+landingTemplate = fs.readFileSync __dirname + "/templates/landing.eco", "utf-8"
 aboutTemplate = fs.readFileSync __dirname + "/templates/about.eco", "utf-8"
 tocTemplate = fs.readFileSync __dirname + "/templates/toc.eco", "utf-8"
 bodyTemplate = fs.readFileSync __dirname + "/templates/body.eco", "utf-8"
@@ -242,11 +243,13 @@ processEpub = (epubPackage,metadata,manifest,spine,navMap) ->
     dates: dates
     languages: languages
 
+  landing = eco.render landingTemplate, data
+  data.pages = [landing]
   # cover
-  cover = eco.render coverTemplate, data
-  data.pages = [cover]
-  # first only?!
   if coverImages.length > 0
+    cover = eco.render coverTemplate, data
+    data.pages.push cover
+    # first only?!
     staticFiles.push coverImages[0]
   # about
   about = eco.render aboutTemplate, data
@@ -255,11 +258,15 @@ processEpub = (epubPackage,metadata,manifest,spine,navMap) ->
   # TOC
   toc = readNavMap navMap
   data.toc = toc
+  data.firstPageid = toc[0].pageid
+  if cover?
+    toc.splice 0,0,{title:'Cover', pageid:'cover'}
+  toc.splice 0,0,{title:'Start here...', pageid:'landing'}
   tocpage = eco.render tocTemplate, data
   data.pages.push tocpage
 
   # body
-  for entry,i in toc
+  for entry,i in toc when entry.src?
     bodyfn = outdn+EPUBDIR+entry.src
     console.log "Read content file #{bodyfn}"
     src = fs.readFileSync bodyfn, 'utf8'

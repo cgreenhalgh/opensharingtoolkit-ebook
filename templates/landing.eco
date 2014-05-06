@@ -1,0 +1,22 @@
+<div data-role="page" id="landing">
+
+	<div data-role="header">
+		<h1><%= @title %></h1>
+		<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-icon-back ui-btn-icon-left ui-btn-icon-notext">Back</a>
+                <%- @makeNavbar null,'landing','cover' %>
+	</div><!-- /header -->
+
+	<div data-role="footer">
+		<h4 id="cacheFeedback">This eBook is not saved; you will need Internet access to view it again</h4>
+	</div><!-- /footer -->
+
+	<div role="main" class="ui-content">
+		<h1><%= @title %></h1>
+		<p>This ebook is designed for reading on a mobile phone or tablet.</p>
+		<p>It has been created as part of a research project at the University of Nottingham to understand the potential usefulness of a future technology – called the Open Sharing Toolkit “Information Hub” – to support local and mobile access to digital media.</p>
+		<p>You can contribute to this research by completing this <a href="http://www.cs.nott.ac.uk/~cmg/ComputerScience/survey-holders-may2014.php">short anonymous web-based questionnaire</a>.</p>
+	</div><!-- /content -->
+
+
+</div><!-- /page -->
+
